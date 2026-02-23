@@ -1,4 +1,3 @@
-import {Fragment} from 'react';
 import {useTheme} from '@emotion/react';
 
 import {Stack} from '@sentry/scraps/layout';
@@ -14,7 +13,6 @@ import {useSetAutomaticName} from 'sentry/views/detectors/components/forms/commo
 import type {DetectorBaseFields} from 'sentry/views/detectors/components/forms/detectorBaseFields';
 import {EditDetectorLayout} from 'sentry/views/detectors/components/forms/editDetectorLayout';
 import {NewDetectorLayout} from 'sentry/views/detectors/components/forms/newDetectorLayout';
-import {ConnectedAssertionSuggestionsButton} from 'sentry/views/detectors/components/forms/uptime/connectedAssertionSuggestionsButton';
 import {ConnectedTestUptimeMonitorButton} from 'sentry/views/detectors/components/forms/uptime/connectedTestUptimeMonitorButton';
 import {UptimeDetectorFormDetectSection} from 'sentry/views/detectors/components/forms/uptime/detect';
 import {
@@ -65,7 +63,7 @@ function UptimeDetectorForm() {
 }
 
 export function NewUptimeDetectorForm() {
-  const {hasRuntimeAssertions, hasAiAssertionSuggestions} = useUptimeAssertionFeatures();
+  const {hasRuntimeAssertions} = useUptimeAssertionFeatures();
 
   return (
     <NewDetectorLayout
@@ -74,12 +72,7 @@ export function NewUptimeDetectorForm() {
       initialFormData={{}}
       environment={ENVIRONMENT_CONFIG}
       extraFooterButton={
-        hasRuntimeAssertions ? (
-          <Fragment>
-            {hasAiAssertionSuggestions && <ConnectedAssertionSuggestionsButton />}
-            <ConnectedTestUptimeMonitorButton />
-          </Fragment>
-        ) : undefined
+        hasRuntimeAssertions ? <ConnectedTestUptimeMonitorButton /> : undefined
       }
       mapFormErrors={mapAssertionFormErrors}
     >
@@ -89,7 +82,7 @@ export function NewUptimeDetectorForm() {
 }
 
 export function EditExistingUptimeDetectorForm({detector}: {detector: UptimeDetector}) {
-  const {hasRuntimeAssertions, hasAiAssertionSuggestions} = useUptimeAssertionFeatures();
+  const {hasRuntimeAssertions} = useUptimeAssertionFeatures();
 
   return (
     <EditDetectorLayout
@@ -98,14 +91,7 @@ export function EditExistingUptimeDetectorForm({detector}: {detector: UptimeDete
       savedDetectorToFormData={uptimeSavedDetectorToFormData}
       environment={ENVIRONMENT_CONFIG}
       extraFooterButton={
-        hasRuntimeAssertions ? (
-          <Fragment>
-            {hasAiAssertionSuggestions && (
-              <ConnectedAssertionSuggestionsButton size="sm" />
-            )}
-            <ConnectedTestUptimeMonitorButton size="sm" />
-          </Fragment>
-        ) : undefined
+        hasRuntimeAssertions ? <ConnectedTestUptimeMonitorButton size="sm" /> : undefined
       }
       mapFormErrors={mapAssertionFormErrors}
     >
