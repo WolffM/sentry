@@ -257,6 +257,9 @@ function WidgetCardChart(props: WidgetCardChartProps) {
   const {start, end, period, utc} = selection.datetime;
   const {projects, environments} = selection;
 
+  // TODO(JoshuaKGoldberg):
+  //   Unexpected unnecessary non-capturing group. This group can be removed without changing the behaviour of the regex  regexp/no-useless-non-capturing-group
+  // eslint-disable-next-line regexp/no-useless-non-capturing-group
   const otherRegex = new RegExp(`(?:.* : ${OTHER}$)|^${OTHER}$`);
   const shouldColorOther = timeseriesResults?.some(({seriesName}) =>
     seriesName?.match(otherRegex)
@@ -468,6 +471,9 @@ function WidgetCardChart(props: WidgetCardChartProps) {
         (timeseriesResults?.some(
           ({seriesName}) =>
             shouldColorOther ||
+            // TODO(JoshuaKGoldberg):
+            //   Unexpected unnecessary non-capturing group. This group can be removed without changing the behaviour of the regex  regexp/no-useless-non-capturing-group
+            // eslint-disable-next-line regexp/no-useless-non-capturing-group
             seriesName?.match(new RegExp(`(?:.* : ${OTHER};)|^${OTHER};`))
         )
           ? 1

@@ -58,7 +58,7 @@ export default function useReplayInit() {
             'x-served-by',
           ],
           maskFn: (text: string) =>
-            isStaticString(text) ? text : text.replace(/[\S]/g, '*'),
+            isStaticString(text) ? text : text.replace(/\S/g, '*'),
 
           slowClickIgnoreSelectors: [
             '[aria-label*="download" i]',
