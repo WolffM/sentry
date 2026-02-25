@@ -14,12 +14,10 @@ import {
   IconDashboard,
   IconGraph,
   IconIssues,
-  IconPrevent,
   IconSettings,
   IconSiren,
 } from 'sentry/icons';
-import {t} from 'sentry/locale';
-import {useOrganization} from 'sentry/utils/useOrganization';
+import useOrganization from 'sentry/utils/useOrganization';
 import {getDefaultExploreRoute} from 'sentry/views/explore/utils';
 import {useNavigation} from 'sentry/views/navigation/navigationContext';
 import {
@@ -76,13 +74,6 @@ function SidebarFooter({children}: {children: React.ReactNode}) {
       )}
     </Flex>
   );
-}
-
-function showPreventNavigation() {
-  // only people with test analytics can see the prevent nav
-  // Legacy Seer and New Seer orgs are getting a Seer Config Reminder icon, which
-  // means that the only Prevent sub-nav item remaining is the Tests item.
-  return false;
 }
 
 export function PrimaryNavigationItems() {
@@ -169,21 +160,6 @@ export function PrimaryNavigationItems() {
             )}
           </NavigationTourElement>
         </Feature>
-
-        {showPreventNavigation() ? (
-          <Container position="relative" height="100%">
-            <SidebarLink
-              to={`/${prefix}/prevent/tests/`}
-              activeTo={`/${prefix}/prevent/`}
-              analyticsKey="prevent"
-              label={t('Prevent')}
-              {...makeNavigationItemProps('prevent')}
-            >
-              <IconPrevent />
-            </SidebarLink>
-            <BetaBadge type="beta" />
-          </Container>
-        ) : null}
 
         <SeparatorItem />
 
