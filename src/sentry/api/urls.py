@@ -246,6 +246,9 @@ from sentry.integrations.api.endpoints.organization_code_mapping_details import 
 from sentry.integrations.api.endpoints.organization_code_mappings import (
     OrganizationCodeMappingsEndpoint,
 )
+from sentry.integrations.api.endpoints.organization_code_mappings_bulk import (
+    OrganizationCodeMappingsBulkEndpoint,
+)
 from sentry.integrations.api.endpoints.organization_coding_agents import (
     OrganizationCodingAgentsEndpoint,
 )
@@ -1431,6 +1434,11 @@ ORGANIZATION_URLS: list[URLPattern | URLResolver] = [
         r"^(?P<organization_id_or_slug>[^/]+)/code-mappings/$",
         OrganizationCodeMappingsEndpoint.as_view(),
         name="sentry-api-0-organization-code-mappings",
+    ),
+    re_path(
+        r"^(?P<organization_id_or_slug>[^/]+)/code-mappings/bulk/$",
+        OrganizationCodeMappingsBulkEndpoint.as_view(),
+        name="sentry-api-0-organization-code-mappings-bulk",
     ),
     re_path(
         r"^(?P<organization_id_or_slug>[^/]+)/derive-code-mappings/$",
