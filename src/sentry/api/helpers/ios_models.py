@@ -10,44 +10,52 @@ IPHONEX = "iPhone X"
 IPHONEXSMAX = "iPhone XS Max"
 
 IPAD2 = "iPad 2"
-IPADGEN3 = "iPad (3rd gen)"
-IPADGEN4 = "iPad (4th gen)"
-IPADGEN5 = "iPad (5th gen)"
-IPADGEN6 = "iPad (6th gen)"
-IPADGEN7 = "iPad (7th gen)"
-IPADGEN8 = "iPad (8th gen)"
-IPADGEN9 = "iPad (9th gen)"
-IPADGEN10 = "iPad (10th gen)"
+IPADGEN3 = "iPad (3rd generation)"
+IPADGEN4 = "iPad (4th generation)"
+IPADGEN5 = "iPad (5th generation)"
+IPADGEN6 = "iPad (6th generation)"
+IPADGEN7 = "iPad (7th generation)"
+IPADGEN8 = "iPad (8th generation)"
+IPADGEN9 = "iPad (9th generation)"
+IPADGEN10 = "iPad (10th generation)"
+IPADA16 = "iPad (A16)"
 
-IPADAIRGEN1 = "iPad Air (1st gen)"
+IPADAIRGEN1 = "iPad Air (1st generation)"
 IPADAIR2 = "iPad Air 2"
-IPADAIRGEN3 = "iPad Air (3rd gen)"
-IPADAIRGEN4 = "iPad Air (4th gen)"
-IPADAIRGEN5 = "iPad Air (5th gen)"
-IPADAIRGEN6 = "iPad Air (6th gen)"
-IPADAIRGEN7 = "iPad Air (7th gen)"
+IPADAIRGEN3 = "iPad Air (3rd generation)"
+IPADAIRGEN4 = "iPad Air (4th generation)"
+IPADAIRGEN5 = "iPad Air (5th generation)"
+IPADAIR11M2 = "iPad Air 11-inch (M2)"
+IPADAIR13M2 = "iPad Air 13-inch (M2)"
+IPADAIR11M3 = "iPad Air 11-inch (M3)"
+IPADAIR13M3 = "iPad Air 13-inch (M3)"
+IPADAIR11M4 = "iPad Air 11-inch (M4)"
+IPADAIR13M4 = "iPad Air 13-inch (M4)"
 
-IPADPRO9GEN1 = "iPad Pro (9.7-inch)"
-IPADPRO10 = "iPad Pro (10.5-inch)"
-IPADPRO11GEN1 = "iPad Pro (11-inch, 1st gen)"
-IPADPRO11GEN2 = "iPad Pro (11-inch, 2nd gen)"
-IPADPRO11GEN3 = "iPad Pro (11-inch, 3rd gen)"
-IPADPRO11GEN4 = "iPad Pro (11-inch, 4th gen)"
-IPADPRO11GEN5 = "iPad Pro (11 inch, 5th gen)"
-IPADPRO12GEN1 = "iPad Pro (12.9-inch, 1st gen)"
-IPADPRO12GEN2 = "iPad Pro (12.9-inch, 2nd gen)"
-IPADPRO12GEN3 = "iPad Pro (12.9-inch, 3rd gen)"
-IPADPRO12GEN4 = "iPad Pro (12.9-inch, 4th gen)"
-IPADPRO12GEN5 = "iPad Pro (12.9-inch, 5th gen)"
-IPADPRO12GEN6 = "iPad Pro (12.9-inch, 6th gen)"
-IPADPRO12GEN7 = "iPad Pro (12.9-inch, 7th gen)"
+IPADPRO9GEN1 = "iPad Pro 9.7-inch"
+IPADPRO10 = "iPad Pro 10.5-inch"
+IPADPRO11GEN1 = "iPad Pro 11-inch"
+IPADPRO11GEN2 = "iPad Pro 11-inch (2nd generation)"
+IPADPRO11GEN3 = "iPad Pro 11-inch (3rd generation)"
+IPADPRO11GEN4 = "iPad Pro 11-inch (4th generation)"
+IPADPRO11M4 = "iPad Pro 11-inch (M4)"
+IPADPRO13M4 = "iPad Pro 13-inch (M4)"
+IPADPRO11M5 = "iPad Pro 11-inch (M5)"
+IPADPRO13M5 = "iPad Pro 13-inch (M5)"
+IPADPRO12GEN1 = "iPad Pro 12.9-inch (1st generation)"
+IPADPRO12GEN2 = "iPad Pro 12.9-inch (2nd generation)"
+IPADPRO12GEN3 = "iPad Pro 12.9-inch (3rd generation)"
+IPADPRO12GEN4 = "iPad Pro 12.9-inch (4th generation)"
+IPADPRO12GEN5 = "iPad Pro 12.9-inch (5th generation)"
+IPADPRO12GEN6 = "iPad Pro 12.9-inch (6th generation)"
 
-IPADMINIGEN1 = "iPad mini (1st gen)"
+IPADMINIGEN1 = "iPad mini"
 IPADMINI2 = "iPad mini 2"
 IPADMINI3 = "iPad mini 3"
 IPADMINI4 = "iPad mini 4"
-IPADMINIGEN5 = "iPad mini (5th gen)"
-IPADMINIGEN6 = "iPad mini (6th gen)"
+IPADMINIGEN5 = "iPad mini (5th generation)"
+IPADMINIGEN6 = "iPad mini (6th generation)"
+IPADMINIA17PRO = "iPad mini (A17 Pro)"
 
 APPLEWATCHGEN1 = "Apple Watch (1st gen)"
 APPLEWATCHSERIES1 = "Apple Watch Series 1"
@@ -62,9 +70,9 @@ APPLEWATCHSERIES9 = "Apple Watch Series 9"
 APPLEWATCHSERIES10 = "Apple Watch Series 10"
 APPLEWATCHSERIES11 = "Apple Watch Series 11"
 
-APPLEWATCHSE1 = "Apple Watch SE (1st gen)"
-APPLEWATCHSE2 = "Apple Watch SE (2nd gen)"
-APPLEWATCHSE3 = "Apple Watch SE (3rd gen)"
+APPLEWATCHSE1 = "Apple Watch SE"
+APPLEWATCHSE2 = "Apple Watch SE 2"
+APPLEWATCHSE3 = "Apple Watch SE 3"
 
 APPLETVGEN1 = "Apple TV (1st gen)"
 APPLETVGEN2 = "Apple TV (2nd gen)"
@@ -135,6 +143,7 @@ IOS_MODELS: dict[str, str] = {
     "iPhone18,2": "iPhone 17 Pro Max",
     "iPhone18,3": "iPhone 17",
     "iPhone18,4": "iPhone Air",
+    "iPhone18,5": "iPhone 17e",
     # iPod Touch
     "iPod1,1": "iPod touch (1st gen)",
     "iPod2,1": "iPod touch (2nd gen)",
@@ -165,6 +174,10 @@ IOS_MODELS: dict[str, str] = {
     "iPad11,7": IPADGEN8,
     "iPad12,1": IPADGEN9,
     "iPad12,2": IPADGEN9,
+    "iPad13,18": IPADGEN10,
+    "iPad13,19": IPADGEN10,
+    "iPad15,7": IPADA16,
+    "iPad15,8": IPADA16,
     # iPad Air
     "iPad4,1": IPADAIRGEN1,
     "iPad4,2": IPADAIRGEN1,
@@ -177,10 +190,18 @@ IOS_MODELS: dict[str, str] = {
     "iPad13,2": IPADAIRGEN4,
     "iPad13,16": IPADAIRGEN5,
     "iPad13,17": IPADAIRGEN5,
-    "iPad14,8": IPADAIRGEN6,
-    "iPad14,9": IPADAIRGEN6,
-    "iPad14,10": IPADAIRGEN7,
-    "iPad14,11": IPADAIRGEN7,
+    "iPad14,8": IPADAIR11M2,
+    "iPad14,9": IPADAIR11M2,
+    "iPad14,10": IPADAIR13M2,
+    "iPad14,11": IPADAIR13M2,
+    "iPad15,3": IPADAIR11M3,
+    "iPad15,4": IPADAIR11M3,
+    "iPad15,5": IPADAIR13M3,
+    "iPad15,6": IPADAIR13M3,
+    "iPad16,8": IPADAIR11M4,
+    "iPad16,9": IPADAIR11M4,
+    "iPad16,10": IPADAIR13M4,
+    "iPad16,11": IPADAIR13M4,
     # iPad Pro
     "iPad6,7": IPADPRO12GEN1,
     "iPad6,3": IPADPRO9GEN1,
@@ -214,10 +235,14 @@ IOS_MODELS: dict[str, str] = {
     "iPad14,4": IPADPRO11GEN4,
     "iPad14,5": IPADPRO12GEN6,
     "iPad14,6": IPADPRO12GEN6,
-    "iPad16,3": IPADPRO11GEN5,
-    "iPad16,4": IPADPRO11GEN5,
-    "iPad16,5": IPADPRO12GEN7,
-    "iPad16,6": IPADPRO12GEN7,
+    "iPad16,3": IPADPRO11M4,
+    "iPad16,4": IPADPRO11M4,
+    "iPad16,5": IPADPRO13M4,
+    "iPad16,6": IPADPRO13M4,
+    "iPad17,1": IPADPRO11M5,
+    "iPad17,2": IPADPRO11M5,
+    "iPad17,3": IPADPRO13M5,
+    "iPad17,4": IPADPRO13M5,
     # iPad Mini
     "iPad2,5": IPADMINIGEN1,
     "iPad2,6": IPADMINIGEN1,
@@ -232,10 +257,10 @@ IOS_MODELS: dict[str, str] = {
     "iPad5,2": IPADMINI4,
     "iPad11,1": IPADMINIGEN5,
     "iPad11,2": IPADMINIGEN5,
-    "iPad13,18": IPADGEN10,
-    "iPad13,19": IPADGEN10,
     "iPad14,1": IPADMINIGEN6,
     "iPad14,2": IPADMINIGEN6,
+    "iPad16,1": IPADMINIA17PRO,
+    "iPad16,2": IPADMINIA17PRO,
     # Apple Watch
     "Watch1,1": APPLEWATCHGEN1,
     "Watch1,2": APPLEWATCHGEN1,
@@ -291,19 +316,21 @@ IOS_MODELS: dict[str, str] = {
     "Watch7,15": APPLEWATCHSE3,
     "Watch7,16": APPLEWATCHSE3,
     # Apple Watch Ultra
-    "Watch6,18": "Apple Watch Ultra (1st gen)",
-    "Watch7,5": "Apple Watch Ultra (2nd gen)",
-    "Watch7,12": "Apple Watch Ultra (3rd gen)",
+    "Watch6,18": "Apple Watch Ultra",
+    "Watch7,5": "Apple Watch Ultra 2",
+    "Watch7,12": "Apple Watch Ultra 3",
     # Apple TV
     "AppleTV1,1": "Apple TV (1st gen)",
     "AppleTV2,1": "Apple TV (2nd gen)",
     "AppleTV3,1": APPLETVGEN3,
     "AppleTV3,2": APPLETVGEN3,
-    "AppleTV5,3": "Apple TV (4th gen)",
+    "AppleTV5,3": "Apple TV HD (4th generation)",
     "AppleTV6,2": "Apple TV 4K",
-    "AppleTV11,1": "Apple TV 4K (2nd gen)",
+    "AppleTV11,1": "Apple TV 4K (2nd generation)",
+    "AppleTV14,1": "Apple TV 4K (3rd generation)",
     "i386": "iOS Simulator (i386)",
     "x86_64": "iOS Simulator (x86_64)",
     # Vision Pro
     "RealityDevice14,1": "Apple Vision Pro",
+    "RealityDevice17,1": "Apple Vision Pro (M5)",
 }
