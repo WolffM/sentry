@@ -197,6 +197,8 @@ class SlackIntegration(NotifyBasicMixin, IntegrationInstallation, IntegrationNot
                         "slack.missing_scope",
                         extra={"integration_id": self.model.id, "scope": scope},
                     )
+                    if isinstance(default, list):
+                        return list(default)  # type: ignore[return-value]
                     return default  # type: ignore[return-value]
                 return fn(self, *args, **kwargs)
 
