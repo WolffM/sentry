@@ -21,15 +21,7 @@ type Props = {
 
 export function OrganizationRules({organization}: Props) {
   const [isCollapsed, setIsCollapsed] = useState(true);
-  const [rules, setRules] = useState<Rule[]>(
-    (() => {
-      try {
-        return convertRelayPiiConfig(organization.relayPiiConfig);
-      } catch {
-        return [];
-      }
-    })()
-  );
+  const [rules, setRules] = useState<Rule[]>([]);
   const [contentHeight, setContentHeight] = useState<string | undefined>();
 
   useEffect(() => {
