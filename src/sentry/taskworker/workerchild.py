@@ -85,7 +85,9 @@ def timeout_alarm(
 
         if previous_remaining > 0:
             # Restore original outer alarm adjusted for elapsed time.
-            signal.alarm(previous_remaining - elapsed)
+            # Ensure at least 1 second to prevent OverflowError on negative values
+            # and to avoid silently canceling the outer alarm with 0.
+            signal.alarm(max(1, previous_remaining - elapsed))
 
 
 def load_parameters(data: str, headers: dict[str, str]) -> dict[str, Any]:
