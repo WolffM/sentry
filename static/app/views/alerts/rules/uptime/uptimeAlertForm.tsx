@@ -111,7 +111,7 @@ function UptimeAlertFormContent({handleDelete, rule}: Props) {
   const queryClient = useQueryClient();
   const {projects} = useProjects();
   const {selection} = usePageFilters();
-  const {hasRuntimeAssertions, hasAiAssertionSuggestions} = useUptimeAssertionFeatures();
+  const {hasAiAssertionSuggestions} = useUptimeAssertionFeatures();
   const previewCheckResult = usePreviewCheckResult();
 
   const project =
@@ -223,14 +223,6 @@ function UptimeAlertFormContent({handleDelete, rule}: Props) {
         if (!methodHasBody(formModel)) {
           formModel.setValue('body', null);
         }
-        // When runtime assertions are disabled, the assertions field is not mounted,
-        // so its `getValue` transform won't run. Normalize empty/sentinel assertions to null.
-        if (!hasRuntimeAssertions) {
-          const assertion = formModel.getValue<UptimeAssertion | null>('assertion');
-          if (!assertion?.root || assertion.root.children?.length === 0) {
-            formModel.setValue('assertion', null);
-          }
-        }
       }}
       extraButton={
         <Flex gap="md">
@@ -248,7 +240,7 @@ function UptimeAlertFormContent({handleDelete, rule}: Props) {
               <Button priority="danger">{t('Delete Rule')}</Button>
             </Confirm>
           )}
-          {hasRuntimeAssertions && hasAiAssertionSuggestions && (
+          {hasAiAssertionSuggestions && (
             <AssertionSuggestionsButton
               getFormData={() => {
                 const data = formModel.getTransformedData();
@@ -269,8 +261,7 @@ function UptimeAlertFormContent({handleDelete, rule}: Props) {
               }}
             />
           )}
-          {hasRuntimeAssertions && (
-            <TestUptimeMonitorButton
+          <TestUptimeMonitorButton
               label={t('Test Rule')}
               getFormData={() => {
                 const data = formModel.getTransformedData();
@@ -284,7 +275,6 @@ function UptimeAlertFormContent({handleDelete, rule}: Props) {
                 };
               }}
             />
-          )}
         </Flex>
       }
     >
@@ -453,25 +443,23 @@ function UptimeAlertFormContent({handleDelete, rule}: Props) {
             )}
           </Observer>
         </Configuration>
-        {hasRuntimeAssertions && (
-          <Fragment>
-            <AlertListItem>{t('Verification')}</AlertListItem>
-            <ListItemSubText>
-              {t(
-                'Define conditions that must be met for the check to be considered successful.'
-              )}
-            </ListItemSubText>
-            <Configuration>
-              <ConfigurationPanel>
-                <UptimeAssertionsField
-                  name="assertion"
-                  label={t('Assertions')}
-                  flexibleControlStateSize
-                />
-              </ConfigurationPanel>
-            </Configuration>
-          </Fragment>
-        )}
+        <Fragment>
+          <AlertListItem>{t('Verification')}</AlertListItem>
+          <ListItemSubText>
+            {t(
+              'Define conditions that must be met for the check to be considered successful.'
+            )}
+          </ListItemSubText>
+          <Configuration>
+            <ConfigurationPanel>
+              <UptimeAssertionsField
+                name="assertion"
+                label={t('Assertions')}
+                flexibleControlStateSize
+              />
+            </ConfigurationPanel>
+          </Configuration>
+        </Fragment>
         <AlertListItem>{t('Set thresholds')}</AlertListItem>
         <ListItemSubText>
           {t('Configure when an issue is created or resolved.')}
