@@ -140,7 +140,11 @@ def process_github_webhook_event(
         # Temporary check for backwards compatibility
         if seer_path is None and github_event is not None:
             assert isinstance(github_event, str)
-            path = get_seer_path_for_request(github_event, event_payload.get("action"))
+            # Old in-flight tasks have transformed payloads with "request_type" field
+            # Map "pr-closed" request_type to "closed" action for endpoint routing
+            request_type = event_payload.get("request_type")
+            github_event_action = "closed" if request_type == "pr-closed" else None
+            path = get_seer_path_for_request(github_event, github_event_action)
         else:
             assert isinstance(seer_path, str)
             path = seer_path

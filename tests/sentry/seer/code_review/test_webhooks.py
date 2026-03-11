@@ -528,6 +528,9 @@ class ProcessGitHubWebhookEventTest(TestCase):
                 tags={"github_event_action": "closed"},
             )
 
+        assert mock_request.call_count == 1
+        assert mock_request.call_args[1]["path"] == "/v1/code_review/pr-closed"
+
     @patch("sentry.seer.code_review.utils.make_signed_seer_api_request")
     def test_validation_converts_enum_keys_to_strings(self, mock_request: MagicMock) -> None:
         """Test that validation converts enum keys to strings for JSON serialization.
