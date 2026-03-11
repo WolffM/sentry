@@ -3,9 +3,7 @@ import useOrganization from 'sentry/utils/useOrganization';
 export function useUptimeAssertionFeatures() {
   const organization = useOrganization();
 
-  const hasRuntimeAssertions = organization.features.includes(
-    'uptime-runtime-assertions'
-  );
+  const hasRuntimeAssertions = true;
   const hasAiAssertionSuggestions =
     hasRuntimeAssertions &&
     organization.features.includes('uptime-ai-assertion-suggestions') &&
