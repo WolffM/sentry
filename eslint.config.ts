@@ -1266,7 +1266,7 @@ export default typescript.config([
             // --- stories ---
             {
               from: ['story-files', 'story-book'],
-              allow: ['core*', 'sentry*', 'story-book'],
+              allow: ['core*', 'sentry*', 'getsentry*', 'story-book'],
             },
             // --- debug tools (e.g. notifications) ---
             {

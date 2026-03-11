@@ -11,6 +11,7 @@ import type {Organization} from 'sentry/types/organization';
 import useOrganization from 'sentry/utils/useOrganization';
 import SettingsPageHeader from 'sentry/views/settings/components/settingsPageHeader';
 
+import SeerOverview from 'getsentry/views/seerAutomation/components/overview/seerOverview';
 import SeerSettingsPageContent from 'getsentry/views/seerAutomation/components/seerSettingsPageContent';
 import SeerSettingsPageWrapper from 'getsentry/views/seerAutomation/components/seerSettingsPageWrapper';
 import useCanWriteSettings from 'getsentry/views/seerAutomation/components/useCanWriteSettings';
@@ -39,6 +40,7 @@ export default function SeerAutomationSettings() {
         )}
       />
       <SeerSettingsPageContent>
+        <SeerOverview />
         <Form
           saveOnBlur
           apiMethod="PUT"
