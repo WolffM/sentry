@@ -1,6 +1,6 @@
 import chunk from 'lodash/chunk';
 
-import usePageFilters from 'sentry/components/pageFilters/usePageFilters';
+import {usePageFilters} from 'sentry/components/pageFilters/usePageFilters';
 import {ReleasesSortOption} from 'sentry/constants/releases';
 import type {NewQuery} from 'sentry/types/organization';
 import type {Release} from 'sentry/types/release';
@@ -13,9 +13,9 @@ import type {ApiQueryKey} from 'sentry/utils/queryClient';
 import {useApiQuery, useQueries} from 'sentry/utils/queryClient';
 import {decodeScalar} from 'sentry/utils/queryString';
 import {escapeFilterValue} from 'sentry/utils/tokenizeSearch';
-import useApi from 'sentry/utils/useApi';
+import {useApi} from 'sentry/utils/useApi';
 import {useLocation} from 'sentry/utils/useLocation';
-import useOrganization from 'sentry/utils/useOrganization';
+import {useOrganization} from 'sentry/utils/useOrganization';
 import type {ReleasesSortByOption} from 'sentry/views/insights/common/components/releasesSort';
 
 export function useReleases(
@@ -76,14 +76,15 @@ export function useReleases(
           },
         },
       ] as ApiQueryKey;
-      const {options} = parseQueryKey(queryKey);
+      const {url, options} = parseQueryKey(queryKey);
       return {
         queryKey,
-        queryFn: () =>
-          api.requestPromise(queryKey[0], {
+        queryFn: () => {
+          return api.requestPromise(url, {
             method: 'GET',
             query: options?.query,
-          }) as Promise<TableData>,
+          }) as Promise<TableData>;
+        },
         staleTime: Infinity,
         enabled: isReady && !releaseResults.isPending,
         retry: false,

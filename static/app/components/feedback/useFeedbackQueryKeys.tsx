@@ -1,8 +1,8 @@
 import type {ReactNode} from 'react';
 import {createContext, useCallback, useContext, useRef, useState} from 'react';
 
-import getFeedbackItemQueryKey from 'sentry/components/feedback/getFeedbackItemQueryKey';
-import useFeedbackListQueryKey from 'sentry/components/feedback/useFeedbackListQueryKey';
+import {getFeedbackItemQueryKey} from 'sentry/components/feedback/getFeedbackItemQueryKey';
+import {useFeedbackListQueryKey} from 'sentry/components/feedback/useFeedbackListQueryKey';
 import type {Organization} from 'sentry/types/organization';
 import {parseQueryKey} from 'sentry/utils/api/apiQueryKey';
 import type {ApiQueryKey, InfiniteApiQueryKey} from 'sentry/utils/queryClient';
@@ -93,9 +93,9 @@ function getInfiniteListQueryKey(listQueryKey: ApiQueryKey | undefined) {
     return undefined;
   }
   const {url, options} = parseQueryKey(listQueryKey);
-  return ['infinite', url, options] as InfiniteApiQueryKey;
+  return [{infinite: true, version: 'v1'}, url, options] as InfiniteApiQueryKey;
 }
 
-export default function useFeedbackQueryKeys() {
+export function useFeedbackQueryKeys() {
   return useContext(FeedbackQueryKeysProvider);
 }

@@ -711,12 +711,6 @@ register(
 
 # Coding Workflows
 register(
-    "coding_workflows.code_review.seer.use_new_endpoints",
-    default=False,
-    type=Bool,
-    flags=FLAG_AUTOMATOR_MODIFIABLE,
-)
-register(
     "seer.code-review.excluded-pr-author-logins",
     type=Sequence,
     default=[],
@@ -755,11 +749,6 @@ register(
 )
 register(
     "github.webhook.mailbox-bucketing.enabled",
-    default=False,
-    flags=FLAG_AUTOMATOR_MODIFIABLE,
-)
-register(
-    "github.webhook.drop-unprocessed-events.enabled",
     default=False,
     flags=FLAG_AUTOMATOR_MODIFIABLE,
 )
@@ -1359,6 +1348,12 @@ register(
 )
 register(
     "seer.explorer-index.rollout",
+    type=Float,
+    default=0.0,
+    flags=FLAG_MODIFIABLE_RATE | FLAG_AUTOMATOR_MODIFIABLE,
+)
+register(
+    "seer.explorer.context-engine-rollout",
     type=Float,
     default=0.0,
     flags=FLAG_MODIFIABLE_RATE | FLAG_AUTOMATOR_MODIFIABLE,
@@ -2499,11 +2494,6 @@ register(
 )
 register(
     "hybridcloud.webhookpayload.push_drain_trigger",
-    default=False,
-    flags=FLAG_AUTOMATOR_MODIFIABLE,
-)
-register(
-    "hybridcloud.deliver_webhooks.delivery_time_include_github_tags",
     default=False,
     flags=FLAG_AUTOMATOR_MODIFIABLE,
 )

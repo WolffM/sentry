@@ -6,10 +6,10 @@ import {organizationRepositoriesInfiniteOptions} from 'sentry/components/events/
 import {isSupportedAutofixProvider} from 'sentry/components/events/autofix/utils';
 import type {OrganizationIntegration} from 'sentry/types/integrations';
 import {apiOptions} from 'sentry/utils/api/apiOptions';
-import {useInfiniteApiQuery, useInfiniteQuery, useQuery} from 'sentry/utils/queryClient';
-import useOrganization from 'sentry/utils/useOrganization';
+import {useInfiniteQuery, useQuery} from 'sentry/utils/queryClient';
+import {useOrganization} from 'sentry/utils/useOrganization';
 
-export default function useSeerOverviewData() {
+export function useSeerOverviewData() {
   const organization = useOrganization();
 
   const {data: integrations = [], isPending: isIntegrationsPending} = useQuery(

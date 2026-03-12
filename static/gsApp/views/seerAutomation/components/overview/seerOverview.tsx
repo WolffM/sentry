@@ -7,9 +7,9 @@ import {Heading, Text} from '@sentry/scraps/text';
 
 import {IconCode, IconCommit, IconFix} from 'sentry/icons';
 import {t, tct, tn} from 'sentry/locale';
-import useOrganization from 'sentry/utils/useOrganization';
+import {useOrganization} from 'sentry/utils/useOrganization';
 
-import useSeerOverviewData from 'getsentry/views/seerAutomation/components/overview/useSeerOverviewData';
+import {useSeerOverviewData} from 'getsentry/views/seerAutomation/components/overview/useSeerOverviewData';
 
 function StatPill({
   value,
@@ -77,7 +77,7 @@ function SectionRow({children, icon, title, link, stats, isLoading}: SectionRowP
   );
 }
 
-export default function SeerOverview() {
+export function SeerOverview() {
   const organization = useOrganization();
   const {stats, isLoading} = useSeerOverviewData();
 
