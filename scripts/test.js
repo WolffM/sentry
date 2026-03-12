@@ -27,4 +27,8 @@ if (process.env.CI && process.env.MERGE_BASE) {
   argv = ['--changedSince', process.env.MERGE_BASE, '--passWithNoTests', ...argv];
 }
 
+if (process.env.CI) {
+  console.log('Running Jest with new argv:', argv);
+}
+
 run(argv);
