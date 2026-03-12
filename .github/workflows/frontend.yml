@@ -181,7 +181,7 @@ jobs:
         run: |
           if [ -n "$MERGE_BASE" ]; then
             echo "Running Jest with --changedSince=$MERGE_BASE --passWithNoTests"
-            pnpm run test-ci --forceExit -- --changedSince="$MERGE_BASE" --passWithNoTests
+            pnpm run test-ci --forceExit --changedSince="$MERGE_BASE" --passWithNoTests
           else
             echo "Running full Jest suite (no merge base)"
             pnpm run test-ci --forceExit
