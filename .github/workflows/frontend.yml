@@ -123,6 +123,9 @@ jobs:
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         name: Checkout sentry
+        with:
+          # PRs need history so we can compute merge base for Jest --changedSince.
+          fetch-depth: ${{ github.event_name == 'pull_request' && '100' || '1' }}
 
       - uses: ./.github/actions/setup-node-pnpm
 
@@ -139,27 +142,15 @@ jobs:
           search_artifacts: true # Search for the last workflow run whose stored the artifact we're looking for
           if_no_artifact_found: warn # Can be one of: "fail", "warn", "ignore"
 
-      # On PRs, compute merge base for Jest --changedSince (run only impacted tests).
-      # Shallow clone only has the merge commit (HEAD). We fetch base and head with
-      # depth so merge-base can be computed, then deepen so HEAD has history (Jest
-      # runs `git diff MERGE_BASE...HEAD`, which requires HEAD's history to exist).
-      # If any step fails, we leave merge_base empty and run the full suite.
+      # On PRs, HEAD is the merge commit; its parents (HEAD^1, HEAD^2) are base and head.
+      # Merge base of those two is what Jest --changedSince needs. Checkout uses fetch-depth: 100 for PRs.
       - name: Get merge base for changedSince (PRs only)
         id: merge_base
         if: github.event_name == 'pull_request'
         run: |
-          BASE_SHA="${{ github.event.pull_request.base.sha }}"
-          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
-          echo "PR base SHA: $BASE_SHA"
-          echo "PR head SHA: $HEAD_SHA"
-          git fetch --depth=100 origin "$BASE_SHA" || true
-          git fetch --depth=100 origin "$HEAD_SHA" || true
-          MERGE_BASE=$(git merge-base "$BASE_SHA" "$HEAD_SHA" 2>/dev/null) || true
+          MERGE_BASE=$(git merge-base HEAD^1 HEAD^2 2>/dev/null) || true
           if [ -n "$MERGE_BASE" ]; then
             echo "Merge base: $MERGE_BASE (Jest will use --changedSince)"
-            # HEAD (merge commit) was a shallow boundary; Jest needs git diff MERGE_BASE...HEAD.
-            # Deepen the clone so HEAD has history and that diff works.
-            git fetch --deepen=100 origin || true
           else
             echo "Merge base: could not compute, will run full test suite"
           fi
