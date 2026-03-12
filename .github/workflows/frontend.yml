@@ -139,6 +139,18 @@ jobs:
           search_artifacts: true # Search for the last workflow run whose stored the artifact we're looking for
           if_no_artifact_found: warn # Can be one of: "fail", "warn", "ignore"
 
+      # On PRs, compute merge base for Jest --changedSince (run only impacted tests).
+      # If fetch or merge-base fails, we leave merge_base empty and run the full suite.
+      - name: Get merge base for changedSince (PRs only)
+        id: merge_base
+        if: github.event_name == 'pull_request'
+        run: |
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+          git fetch --depth=1 origin "$BASE_SHA" 2>/dev/null || true
+          MERGE_BASE=$(git merge-base "$BASE_SHA" "$HEAD_SHA" 2>/dev/null) || true
+          echo "merge_base=${MERGE_BASE:-}" >> "$GITHUB_OUTPUT"
+
       - name: jest
         env:
           GITHUB_PR_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
@@ -154,7 +166,13 @@ jobs:
           #
           # This quiets up the logs quite a bit.
           DEBUG_PRINT_LIMIT: 0
-        run: pnpm run test-ci --changedSince=${{ github.event.pull_request.base.sha }} --forceExit
+          MERGE_BASE: ${{ steps.merge_base.outputs.merge_base }}
+        run: |
+          if [ -n "$MERGE_BASE" ]; then
+            pnpm run test-ci --forceExit -- --changedSince="$MERGE_BASE" --passWithNoTests
+          else
+            pnpm run test-ci --forceExit
+          fi
 
   form-field-registry:
     if: needs.files-changed.outputs.frontend_all == 'true'
