@@ -178,14 +178,7 @@ jobs:
           # This quiets up the logs quite a bit.
           DEBUG_PRINT_LIMIT: 0
           MERGE_BASE: ${{ steps.merge_base.outputs.merge_base }}
-        run: |
-          if [ -n "$MERGE_BASE" ]; then
-            echo "Running Jest with --changedSince=$MERGE_BASE --passWithNoTests"
-            pnpm run test-ci --forceExit --passWithNoTests -- --changedSince="$MERGE_BASE"
-          else
-            echo "Running full Jest suite (no merge base)"
-            pnpm run test-ci --forceExit
-          fi
+        run: pnpm run test-ci --forceExit
 
   form-field-registry:
     if: needs.files-changed.outputs.frontend_all == 'true'

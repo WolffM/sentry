@@ -21,14 +21,10 @@ if (process.env.CI || process.env.SENTRY_PRECOMMIT || argv.includes('--coverage'
 }
 
 // In CI, when MERGE_BASE is set (PRs), prepend --changedSince and --passWithNoTests
-// so Jest parses them as options instead of test patterns. Only set in frontend workflow.
+// so Jest parses them as options instead of test patterns.
+// This is only set in the frontend workflow (frontend.yml).
 if (process.env.CI && process.env.MERGE_BASE) {
-  argv = [
-    '--changedSince',
-    process.env.MERGE_BASE,
-    '--passWithNoTests',
-    ...argv,
-  ];
+  argv = ['--changedSince', process.env.MERGE_BASE, '--passWithNoTests', ...argv];
 }
 
 run(argv);
