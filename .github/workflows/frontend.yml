@@ -172,7 +172,18 @@ jobs:
           # This quiets up the logs quite a bit.
           DEBUG_PRINT_LIMIT: 0
           MERGE_BASE: ${{ steps.merge_base.outputs.merge_base }}
-        run: pnpm run test-ci --forceExit
+          # When running jest directly (PR with merge base), match scripts/test.js env.
+          NODE_ENV: test
+          PUBLIC_URL: ''
+          TZ: America/New_York
+        run: |
+          if [ -n "$MERGE_BASE" ]; then
+            echo "Running Jest with --changedSince=$MERGE_BASE --passWithNoTests"
+            pnpm run test-ci --forceExit --changedSince "$MERGE_BASE" --passWithNoTests
+          else
+            echo "Running full Jest suite (no merge base)"
+            pnpm run test-ci --forceExit
+          fi
 
   form-field-registry:
     if: needs.files-changed.outputs.frontend_all == 'true'
