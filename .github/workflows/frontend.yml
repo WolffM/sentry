@@ -147,8 +147,15 @@ jobs:
         run: |
           BASE_SHA="${{ github.event.pull_request.base.sha }}"
           HEAD_SHA="${{ github.event.pull_request.head.sha }}"
-          git fetch --depth=1 origin "$BASE_SHA" 2>/dev/null || true
+          echo "PR base SHA: $BASE_SHA"
+          echo "PR head SHA: $HEAD_SHA"
+          git fetch --depth=1 origin "$BASE_SHA" || true
           MERGE_BASE=$(git merge-base "$BASE_SHA" "$HEAD_SHA" 2>/dev/null) || true
+          if [ -n "$MERGE_BASE" ]; then
+            echo "Merge base: $MERGE_BASE (Jest will use --changedSince)"
+          else
+            echo "Merge base: could not compute, will run full test suite"
+          fi
           echo "merge_base=${MERGE_BASE:-}" >> "$GITHUB_OUTPUT"
 
       - name: jest
@@ -169,8 +176,10 @@ jobs:
           MERGE_BASE: ${{ steps.merge_base.outputs.merge_base }}
         run: |
           if [ -n "$MERGE_BASE" ]; then
+            echo "Running Jest with --changedSince=$MERGE_BASE --passWithNoTests"
             pnpm run test-ci --forceExit -- --changedSince="$MERGE_BASE" --passWithNoTests
           else
+            echo "Running full Jest suite (no merge base)"
             pnpm run test-ci --forceExit
           fi
 
