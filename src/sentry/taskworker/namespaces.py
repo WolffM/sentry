@@ -1,4 +1,13 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+from django.conf import settings
+
 from sentry.taskworker.runtime import app
+
+if TYPE_CHECKING:
+    from taskbroker_client.registry import ExternalNamespace
 
 # Namespaces for taskworker tasks
 alerts_tasks = app.taskregistry.create_namespace(
@@ -260,6 +269,17 @@ workflow_engine_tasks = app.taskregistry.create_namespace(
     app_feature="workflow_engine",
 )
 
+
+# External namespaces for tasks belonging to other applications
+launchpad_tasks: ExternalNamespace | None = None
+if settings.TASKWORKER_USE_LIBRARY:
+    from typing import cast
+
+    from taskbroker_client.app import TaskbrokerApp
+
+    launchpad_tasks = cast(TaskbrokerApp, app).create_external_namespace(
+        name="default", application="launchpad"
+    )
 
 # Namespaces for testing taskworker tasks
 exampletasks = app.taskregistry.create_namespace(name="examples")
