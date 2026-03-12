@@ -140,10 +140,10 @@ jobs:
           if_no_artifact_found: warn # Can be one of: "fail", "warn", "ignore"
 
       # On PRs, compute merge base for Jest --changedSince (run only impacted tests).
-      # Shallow clone only has the merge commit. We fetch both base and head with a
-      # gets-most-PRs depth so git merge-base can walk history for the common ancestor
-      # (depth=1 only fetches the tip, so merge-base would fail).
-      # If fetch or merge-base fails, run full suite.
+      # Shallow clone only has the merge commit (HEAD). We fetch base and head with
+      # depth so merge-base can be computed, then deepen so HEAD has history (Jest
+      # runs `git diff MERGE_BASE...HEAD`, which requires HEAD's history to exist).
+      # If any step fails, we leave merge_base empty and run the full suite.
       - name: Get merge base for changedSince (PRs only)
         id: merge_base
         if: github.event_name == 'pull_request'
@@ -157,6 +157,9 @@ jobs:
           MERGE_BASE=$(git merge-base "$BASE_SHA" "$HEAD_SHA" 2>/dev/null) || true
           if [ -n "$MERGE_BASE" ]; then
             echo "Merge base: $MERGE_BASE (Jest will use --changedSince)"
+            # HEAD (merge commit) was a shallow boundary; Jest needs git diff MERGE_BASE...HEAD.
+            # Deepen the clone so HEAD has history and that diff works.
+            git fetch --deepen=100 origin || true
           else
             echo "Merge base: could not compute, will run full test suite"
           fi
