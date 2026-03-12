@@ -11059,3 +11059,93 @@ def test_forward_to_client(client, provider: GitLabProvider, param: ForwardToCli
         assert mock_call[0] == client_call.client_method
         assert mock_call[1] == client_call.client_args
         assert mock_call[2] == client_call.client_kwds
+
+
+def test_init_accepts_self_hosted_external_id(client: GitLabApiClient) -> None:
+    provider = GitLabProvider(
+        client=client,
+        organization_id=1,
+        repository=Repository(
+            integration_id=1,
+            name="test-repo",
+            organization_id=1,
+            is_active=True,
+            external_id="gitlab.example.internal:8443:79787061",
+        ),
+    )
+
+    assert provider._repo_id == "79787061"
+
+
+def test_get_pull_requests_closed_includes_merged(
+    client: GitLabApiClient, provider: GitLabProvider
+) -> None:
+    client.get_merge_requests.side_effect = [
+        [
+            {
+                "id": 1,
+                "iid": 10,
+                "title": "Closed MR",
+                "description": "",
+                "state": "closed",
+                "target_branch": "main",
+                "source_branch": "feature/closed",
+                "sha": "closed-sha",
+                "merged_at": None,
+                "web_url": "https://gitlab.example/internal/repo/-/merge_requests/10",
+            }
+        ],
+        [
+            {
+                "id": 2,
+                "iid": 11,
+                "title": "Merged MR",
+                "description": "",
+                "state": "merged",
+                "target_branch": "main",
+                "source_branch": "feature/merged",
+                "sha": "merged-sha",
+                "merged_at": "2026-03-12T00:00:00.000Z",
+                "web_url": "https://gitlab.example/internal/repo/-/merge_requests/11",
+            }
+        ],
+    ]
+
+    result = provider.get_pull_requests(state="closed")
+
+    assert client.get_merge_requests.mock_calls == [
+        unittest.mock.call("79787061", state="closed"),
+        unittest.mock.call("79787061", state="merged"),
+    ]
+    assert [item["number"] for item in result["data"]] == ["10", "11"]
+    assert [item["state"] for item in result["data"]] == ["closed", "closed"]
+    assert [item["merged"] for item in result["data"]] == [False, True]
+
+
+def test_create_review_comment_reply_without_position(
+    client: GitLabApiClient, provider: GitLabProvider
+) -> None:
+    client.create_merge_request_discussion_note.return_value = {
+        "id": 12345,
+        "type": "DiffNote",
+        "body": "Reply body",
+    }
+
+    result = provider.create_review_comment_reply(
+        pull_request_id="1",
+        body="Reply body",
+        comment_id="discussion-id",
+    )
+
+    client.create_merge_request_discussion_note.assert_called_once_with(
+        "79787061",
+        "1",
+        "discussion-id",
+        {"body": "Reply body"},
+    )
+    assert result["data"] == {
+        "id": "discussion-id",
+        "html_url": None,
+        "path": "",
+        "body": "Reply body",
+    }

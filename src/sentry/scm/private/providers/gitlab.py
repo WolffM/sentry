@@ -73,9 +73,9 @@ class GitLabProvider:
         self.repository = repository
         external_id = repository["external_id"]
         assert external_id is not None
-        prefix = "gitlab.com:"
-        assert external_id.startswith(prefix)
-        self._repo_id = external_id[len(prefix) :]
+        _, separator, project_id = external_id.rpartition(":")
+        assert separator
+        self._repo_id = project_id
 
     def is_rate_limited(self, referrer: Referrer) -> bool:
         return False  # Rate-limits temporarily disabled.
@@ -372,11 +372,13 @@ class GitLabProvider:
     ) -> PaginatedActionResult[PullRequest]:
         if state is None:
             gitlab_state = None
+            raw = self.client.get_merge_requests(self._repo_id, state=gitlab_state)
         elif state == "open":
-            gitlab_state = "opened"
+            raw = self.client.get_merge_requests(self._repo_id, state="opened")
         else:
-            gitlab_state = "closed"
-        raw = self.client.get_merge_requests(self._repo_id, state=gitlab_state)
+            # GitHub "closed" includes merged pull requests, so include both GitLab states.
+            raw = self.client.get_merge_requests(self._repo_id, state="closed")
+            raw += self.client.get_merge_requests(self._repo_id, state="merged")
         return make_paginated_result(map_pull_request, raw)
 
     @catch_provider_exception
@@ -609,10 +611,11 @@ def map_reaction_result(raw: dict[str, Any]) -> ReactionResult:
 
 def map_review_comment(id: str) -> Callable[[dict[str, Any]], ReviewComment]:
     def _map_review_comment(raw: dict[str, Any]) -> ReviewComment:
+        raw_position = raw.get("position") or {}
         return ReviewComment(
             id=id,
             html_url=None,
-            path=raw["position"]["new_path"],
+            path=raw_position.get("new_path") or raw_position.get("old_path") or "",
             body=raw["body"],
         )
 
