@@ -1,5 +1,4 @@
 import {useRef} from 'react';
-import styled from '@emotion/styled';
 
 import ErrorBoundary from 'sentry/components/errorBoundary';
 import {
@@ -234,16 +233,11 @@ function EventPreprodBuildInfoContent({headArtifactId}: {headArtifactId: string}
   }
 
   return (
-    <BuildInfoContainer columnCount={columnCount} ref={containerRef}>
+    <TreeContainer columnCount={columnCount} ref={containerRef} style={{marginTop: 0}}>
       {columns}
-    </BuildInfoContainer>
+    </TreeContainer>
   );
 }
-
-const BuildInfoContainer = styled(TreeContainer)`
-  margin-top: 0;
-  font-size: ${p => p.theme.font.size.sm};
-`;
 
 function EventPreprodBuildInfoSection({headArtifactId}: {headArtifactId: string}) {
   return (
