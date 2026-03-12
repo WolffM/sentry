@@ -42,7 +42,7 @@ def _check_if_bool(meta: RequestMeta, name: str, bool_cache: dict[str, bool]) ->
         value_substring_match=name,
     )
     rpc_response = snuba_rpc.attribute_names_rpc(rpc_request)
-    bool_cache[name] = len(rpc_response.attributes) == 1 and rpc_response.attributes[0].name == name
+    bool_cache[name] = any(attribute.name == name for attribute in rpc_response.attributes)
     return bool_cache[name]
 
 

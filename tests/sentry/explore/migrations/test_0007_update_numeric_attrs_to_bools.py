@@ -16,6 +16,7 @@ class UpdateNumericToBooleanTest(TestMigrations, SnubaTestCase, SpanTestCase):
         span1["data"] = {
             "test_with_space": True,
             "test_without_space": True,
+            "debug": True,
             "dont_touch": 123,
             "is_debug": False,
         }
@@ -33,9 +34,10 @@ class UpdateNumericToBooleanTest(TestMigrations, SnubaTestCase, SpanTestCase):
                         "fields": [
                             "tags[test_without_space,number]",
                             "tags[test_with_space, number]",
+                            "tags[debug,number]",
                             "tags[dont_touch, number]",
                         ],
-                        "query": "tags[test_without_space,number]:0 tags[test_with_space, number]:1 tags[dont_touch,number]:1",
+                        "query": "tags[test_without_space,number]:0 tags[test_with_space, number]:1 tags[debug,number]:1 tags[dont_touch,number]:1",
                         "mode": "samples",
                         "aggregateField": [
                             {
@@ -67,9 +69,10 @@ class UpdateNumericToBooleanTest(TestMigrations, SnubaTestCase, SpanTestCase):
                     "fields": [
                         "tags[test_without_space,boolean]",
                         "tags[test_with_space,boolean]",
+                        "tags[debug,boolean]",
                         "tags[dont_touch, number]",
                     ],
-                    "query": "tags[test_without_space,boolean]:False tags[test_with_space, boolean]:True tags[dont_touch,number]:1",
+                    "query": "tags[test_without_space,boolean]:False tags[test_with_space,boolean]:True tags[debug,boolean]:True tags[dont_touch,number]:1",
                     "mode": "samples",
                     "aggregateField": [
                         {
