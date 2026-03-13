@@ -26,7 +26,10 @@ type Options = {
  *
  * See tests for examples
  */
-export default function recreateRoute(to: string | PlainRoute, options: Options): string {
+// TODO(eslint): this is used in a lot of tests that were tricky at the time to migrate.
+// Eventually it should be switched to a named import.
+// eslint-diable-next-line @sentry/no-default-exports
+export function recreateRoute(to: string | PlainRoute, options: Options): string {
   const {routes, params, location, stepBack} = options;
   const paths = routes.map(({path}) => {
     path = path || '';
