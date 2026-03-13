@@ -216,11 +216,15 @@ export function PullRequestsCard({section}: AutofixCardProps) {
           );
         }
 
-        return (
-          <Button key={pullRequest.repo_name} priority="primary" disabled>
-            {t('Failed to create PR in %s', pullRequest.repo_name)}
-          </Button>
-        );
+        if (pullRequest.pr_creation_status === 'error') {
+          return (
+            <Button key={pullRequest.repo_name} priority="primary" disabled>
+              {t('Failed to create PR in %s', pullRequest.repo_name)}
+            </Button>
+          );
+        }
+
+        return null;
       })}
     </ArtifactCard>
   );
@@ -272,7 +276,7 @@ function LoadingDetails({messages}: LoadingDetailsProps) {
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({behavior: 'smooth'});
+    bottomRef.current?.scrollIntoView({behavior: 'smooth', block: 'nearest'});
   }, [messages]);
 
   return (
