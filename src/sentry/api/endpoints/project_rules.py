@@ -753,8 +753,10 @@ def format_request_data(
 
         if actor and actor.is_team:
             workflow_payload["owner_team_id"] = actor.id
+            workflow_payload["owner_user_id"] = None
         elif actor:
             workflow_payload["owner_user_id"] = actor.id
+            workflow_payload["owner_team_id"] = None
 
     triggers: dict[str, Any] = {"logicType": "any-short", "conditions": []}
     translated_filter_list = []
