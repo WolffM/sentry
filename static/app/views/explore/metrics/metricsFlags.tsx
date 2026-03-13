@@ -20,10 +20,3 @@ export const canUseMetricsAlertsUI = (organization: Organization) => {
     canUseMetricsUI(organization) && organization.features.includes('tracemetrics-alerts')
   );
 };
-
-export const canUseMetricsMultiAggregateUI = (organization: Organization) => {
-  return (
-    canUseMetricsUI(organization) &&
-    organization.features.includes('tracemetrics-overlay-charts-ui')
-  );
-};
