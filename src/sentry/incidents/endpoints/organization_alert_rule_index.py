@@ -223,7 +223,7 @@ class AlertRuleFetchMixin(Endpoint):
 
         if use_workflow_engine:
             detectors = Detector.objects.filter(
-                Q(alertruledetector__isnull=False)  # Dual-written
+                Q(alertruledetector__alert_rule_id__isnull=False)  # Dual-written
                 | Q(alertruledetector__isnull=True, type="metric_issue"),  # Single-written
                 project__in=projects,
             )
