@@ -56,6 +56,18 @@ describe('convertBuilderStateToStateQueryParams', () => {
     expect(queryParams.selectedAggregate).toBe(0);
   });
 
+  it('does not include text content in query params', () => {
+    const mockState: WidgetBuilderState = {
+      textContent: 'This should not be in URL params',
+      description: 'Description',
+    };
+
+    const queryParams = convertBuilderStateToStateQueryParams(mockState);
+
+    expect(queryParams).not.toHaveProperty('textContent');
+    expect(queryParams.description).toBe('Description');
+  });
+
   it('applies the thresholds to the query params', () => {
     const mockState: WidgetBuilderState = {
       query: ['transaction.duration:>100'],

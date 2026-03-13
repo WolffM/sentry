@@ -11,7 +11,15 @@ import {
 export function convertBuilderStateToStateQueryParams(
   state: WidgetBuilderState
 ): WidgetBuilderStateQueryParams {
-  const {fields, yAxis, sort, thresholds, traceMetric, ...rest} = state;
+  const {
+    fields,
+    yAxis,
+    sort,
+    thresholds,
+    traceMetric,
+    textContent: _textContent,
+    ...rest
+  } = state;
   return {
     ...rest,
     field: serializeFields(fields ?? []),
