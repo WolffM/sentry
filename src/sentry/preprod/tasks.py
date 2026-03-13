@@ -1024,13 +1024,11 @@ def _dispatch_taskbroker_shadow(project_id: int, org_id: int, artifact_id: int) 
         if run_distribution:
             requested_features.append(PreprodFeature.BUILD_DISTRIBUTION)
 
-        process_artifact.apply_async(
-            kwargs={
-                "artifact_id": str(artifact_id),
-                "project_id": str(project_id),
-                "organization_id": str(org_id),
-                "requested_features": [feature.value for feature in requested_features],
-            }
+        process_artifact.delay(
+            artifact_id=str(artifact_id),
+            project_id=str(project_id),
+            organization_id=str(org_id),
+            requested_features=[feature.value for feature in requested_features],
         )
     except Exception:
         logger.exception(
