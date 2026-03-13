@@ -112,6 +112,10 @@ function getTestsForGroup(
   allTests: ReadonlyArray<string>,
   testStats: Record<string, number>
 ): string[] {
+  if (allTests.length === 0) {
+    return [];
+  }
+
   // Only consider tests in allTests (when using --changedSince, allTests is the filtered list).
   // Use balance duration when available, otherwise default.
   const SUITE_P50_DURATION_MS = 1500;
@@ -185,8 +189,8 @@ function getTestsForGroup(
     }
   }
 
-  if (!groups[nodeIndex]) {
-    throw new Error(`No tests found for node ${nodeIndex}`);
+  if (!groups[nodeIndex] || groups[nodeIndex].length === 0) {
+    return [];
   }
   return groups[nodeIndex].map(test => `<rootDir>/${test}`);
 }
