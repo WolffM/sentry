@@ -1,4 +1,4 @@
-import {useCallback, useMemo, useRef, useState} from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useTheme} from '@emotion/react';
 import {mergeRefs} from '@react-aria/utils';
 import * as Sentry from '@sentry/react';
@@ -137,6 +137,7 @@ export function TimeSeriesWidgetVisualization(props: TimeSeriesWidgetVisualizati
 
   const chartRef = useRef<ReactEchartsRef | null>(null);
   const {register: registerWithWidgetSyncContext, groupName} = useWidgetSyncContext();
+  const unregisterRef = useRef<(() => void) | null>(null);
 
   const pageFilters = usePageFilters();
   const {start, end, period, utc} =
@@ -445,10 +446,17 @@ export function TimeSeriesWidgetVisualization(props: TimeSeriesWidgetVisualizati
   const handleChartReady = useCallback(
     (instance: echarts.ECharts) => {
       onChartReadyZoom(instance);
-      registerWithWidgetSyncContext(instance);
+      unregisterRef.current = registerWithWidgetSyncContext(instance);
     },
     [onChartReadyZoom, registerWithWidgetSyncContext]
   );
+
+  // Cleanup: unregister chart on unmount
+  useEffect(() => {
+    return () => {
+      unregisterRef.current?.();
+    };
+  }, []);
 
   const showXAxisProp = props.showXAxis ?? 'auto';
   const showXAxis = showXAxisProp === 'auto';
