@@ -69,7 +69,11 @@ let JEST_TESTS: string[] | undefined;
 // to reexec itself here
 if (CI && !process.env.JEST_LIST_TESTS_INNER) {
   try {
-    const stdout = execFileSync('pnpm', ['exec', 'jest', '--listTests', '--json'], {
+    const listTestsArgs = ['exec', 'jest', '--listTests', '--json'];
+    if (process.env.MERGE_BASE) {
+      listTestsArgs.push('--changedSince', process.env.MERGE_BASE, '--passWithNoTests');
+    }
+    const stdout = execFileSync('pnpm', listTestsArgs, {
       stdio: 'pipe',
       encoding: 'utf-8',
       env: {...process.env, JEST_LIST_TESTS_INNER: '1'},
@@ -108,41 +112,23 @@ function getTestsForGroup(
   allTests: ReadonlyArray<string>,
   testStats: Record<string, number>
 ): string[] {
-  const speculatedSuiteDuration = Object.values(testStats).reduce((a, b) => a + b, 0);
+  // Only consider tests in allTests (when using --changedSince, allTests is the filtered list).
+  // Use balance duration when available, otherwise default.
+  const SUITE_P50_DURATION_MS = 1500;
+  const tests = new Map<string, number>();
+  for (const test of allTests) {
+    const duration = testStats[test];
+    if (duration !== undefined && duration <= 0) {
+      throw new Error(`Test duration is <= 0 for ${test}`);
+    }
+    tests.set(test, duration ?? SUITE_P50_DURATION_MS);
+  }
+
+  const speculatedSuiteDuration = [...tests.values()].reduce((a, b) => a + b, 0);
   const targetDuration = speculatedSuiteDuration / nodeTotal;
 
   if (speculatedSuiteDuration <= 0) {
     throw new Error('Speculated suite duration is <= 0');
-  }
-
-  // We are going to take all of our tests and split them into groups.
-  // If we have a test without a known duration, we will default it to 2 second
-  // This is to ensure that we still assign some weight to the tests and still attempt to somewhat balance them.
-  // The 1.5s default is selected as a p50 value of all of our JS tests in CI (as of 2022-10-26) taken from our sentry performance monitoring.
-  const tests = new Map<string, number>();
-  const SUITE_P50_DURATION_MS = 1500;
-
-  // First, iterate over all of the tests we have stats for.
-  Object.entries(testStats).forEach(([test, duration]) => {
-    if (duration <= 0) {
-      throw new Error(`Test duration is <= 0 for ${test}`);
-    }
-    tests.set(test, duration);
-  });
-  // Then, iterate over all of the remaining tests and assign them a default duration.
-  for (const test of allTests) {
-    if (tests.has(test)) {
-      continue;
-    }
-    tests.set(test, SUITE_P50_DURATION_MS);
-  }
-
-  // Sanity check to ensure that we have all of our tests accounted for, we need to fail
-  // if this is not the case as we risk not executing some tests and passing the build.
-  if (tests.size < allTests.length) {
-    throw new Error(
-      `All tests should be accounted for, missing ${allTests.length - tests.size}`
-    );
   }
 
   const groups: string[][] = [];
@@ -183,7 +169,7 @@ function getTestsForGroup(
     if (!nextTest) {
       throw new TypeError('Received falsy test' + JSON.stringify(nextTest));
     }
-    groups[i % 4]!.push(nextTest[0]);
+    groups[i % nodeTotal]!.push(nextTest[0]);
     i++;
   }
 
