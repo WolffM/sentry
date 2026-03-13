@@ -247,6 +247,7 @@ const ESM_NODE_MODULES = ['screenfull', 'cbor2', 'nuqs', 'color', 'marked'];
 
 const config: Config.InitialOptions = {
   verbose: false,
+  passWithNoTests: !!process.env.MERGE_BASE,
   collectCoverageFrom: [
     'static/app/**/*.{js,jsx,ts,tsx}',
     '!static/app/**/*.spec.{js,jsx,ts,tsx}',

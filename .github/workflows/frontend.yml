@@ -174,12 +174,11 @@ jobs:
           MERGE_BASE: ${{ steps.merge_base.outputs.merge_base }}
         run: |
           if [ -n "$MERGE_BASE" ]; then
-            echo "Running Jest with --changedSince=$MERGE_BASE --passWithNoTests"
-            pnpm run test-ci --forceExit -- --changedSince "$MERGE_BASE" --passWithNoTests
+            echo "Running Jest with changedSince=$MERGE_BASE (filtered via jest.config.ts)"
           else
             echo "Running full Jest suite (no merge base)"
-            pnpm run test-ci --forceExit
           fi
+          pnpm run test-ci --forceExit
 
   form-field-registry:
     if: needs.files-changed.outputs.frontend_all == 'true'
