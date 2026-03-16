@@ -600,15 +600,6 @@ def _get_requested_debug_id(files, checksum: str) -> str | None:
     return get_debug_id_from_dif_request(name=file.get("name"), debug_id=file.get("debug_id"))
 
 
-def _get_requested_debug_ids(files, checksums: Iterable[str]) -> list[tuple[str, str | None]]:
-    """Returns the effective requested debug ID for each checksum.
-
-    Most DIF uploads provide ``debug_id`` directly. Formats such as ProGuard
-    encode the effective debug ID in the request filename instead.
-    """
-    return [(checksum, _get_requested_debug_id(files, checksum)) for checksum in checksums]
-
-
 def _build_requested_debug_id_match_annotation(
     requested_debug_ids: Iterable[tuple[str, str | None]],
 ) -> Case:
