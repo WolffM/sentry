@@ -306,6 +306,6 @@ class AppleCrashReport:
             hex(image_addr + image_size - 1) if image_size else NATIVE_UNKNOWN_STRING,
             image_name(debug_image.get("code_file") or NATIVE_UNKNOWN_STRING),
             get_path(self.context, "device", "arch") or NATIVE_UNKNOWN_STRING,
-            (debug_image.get("debug_id") or "").replace("-", "").lower() or NATIVE_UNKNOWN_STRING,
+            (debug_image.get("debug_id") or "").replace("-", "").lower() or "unknown",
             debug_image.get("code_file") or NATIVE_UNKNOWN_STRING,
         )
