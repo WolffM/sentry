@@ -113,6 +113,7 @@ export default function CreateFromSeer() {
   const [dashboard, setDashboard] = useState<DashboardDetails>(EMPTY_DASHBOARD);
   const [isUpdating, setisUpdating] = useState(false); // State tracks if dashboard is being updated from user chat input
   const prevSessionStatusRef = useRef<string | null>(null);
+  const prevSessionRef = useRef<NonNullable<SeerExplorerResponse['session']> | null>(null);
 
   const {data, isError} = useApiQuery<SeerExplorerResponse>(
     makeSeerExplorerQueryKey(organization.slug, seerRunId),
@@ -137,14 +138,27 @@ export default function CreateFromSeer() {
   const sessionStatus = session?.status ?? null;
 
   useEffect(() => {
+    if (sessionStatus === 'error' || isError) {
+      addErrorMessage(t('Failed to generate dashboard'));
+    }
+  }, [sessionStatus, isError]);
+
+  useEffect(() => {
     const prevStatus = prevSessionStatusRef.current;
+    const prevSession = prevSessionRef.current;
     prevSessionStatusRef.current = sessionStatus;
+    prevSessionRef.current = session;
 
     const wasTerminal = prevStatus === 'completed' || prevStatus === 'error';
     const isTerminal = sessionStatus === 'completed' || sessionStatus === 'error';
 
-    // Only trigger Dashboard rerender when transition from updating state to completed state
-    if (!wasTerminal && isTerminal && session) {
+    // Trigger Dashboard rerender when:
+    // 1. Transition from updating state to completed state (!wasTerminal && isTerminal)
+    // 2. Session data changed while already in terminal state (for fast backend responses)
+    const shouldUpdate =
+      (!wasTerminal && isTerminal) || (wasTerminal && isTerminal && session !== prevSession);
+
+    if (shouldUpdate && session) {
       if (isUpdating) {
         setisUpdating(false);
       }
