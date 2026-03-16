@@ -36,7 +36,7 @@ function RedirectToProjectModal({slug, Header, Body}: Props) {
   }, []);
 
   useEffect(() => {
-    if (timer <= 0) {
+    if (timer <= 1) {
       testableWindowLocation.assign(newPath);
     }
   }, [timer, newPath]);
