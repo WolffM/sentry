@@ -3214,6 +3214,13 @@ register(
     default=500,
     flags=FLAG_PRIORITIZE_DISK | FLAG_AUTOMATOR_MODIFIABLE,
 )
+# Maximum number of segments per trace to flush in one cycle. 0 disables the limit.
+register(
+    "spans.buffer.max-flush-segments-per-trace",
+    type=Int,
+    default=0,
+    flags=FLAG_PRIORITIZE_DISK | FLAG_AUTOMATOR_MODIFIABLE,
+)
 # Maximum memory percentage for the span buffer in Redis before rejecting messages.
 register(
     "spans.buffer.max-memory-percentage",
