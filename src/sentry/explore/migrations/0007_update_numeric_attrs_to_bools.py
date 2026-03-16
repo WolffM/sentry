@@ -3,6 +3,7 @@
 from django.db import migrations
 from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 from django.db.migrations.state import StateApps
+from django.db.models import Q
 
 from sentry.new_migrations.migrations import CheckedMigration
 from sentry.explore.models import ExploreSavedQueryDataset
@@ -50,7 +51,9 @@ def update_numeric_attrs_to_bools(apps: StateApps, schema_editor: BaseDatabaseSc
     ExploreSavedQuery = apps.get_model("explore", "ExploreSavedQuery")
 
     for saved_query in RangeQuerySetWrapperWithProgressBar(
-        ExploreSavedQuery.objects.filter(query__query__icontains=",number]")
+        ExploreSavedQuery.objects.filter(
+            Q(query__query__icontains=",number]") | Q(query__query__icontains=", number]")
+        )
     ):
         trace_item_type = ExploreSavedQueryDataset.get_type_name(saved_query.dataset)
         dataset = get_dataset(trace_item_type)
