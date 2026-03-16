@@ -429,9 +429,9 @@ class FeatureManager(RegisteredFeatureManager):
         try:
             if self._entity_handler:
                 return self._entity_handler.get_experiment_assignments(organization, actor)
-        except Exception:
+        except Exception as e:
             if in_random_rollout("features.error.capture_rate"):
-                logger.exception("Failed to get experiment assignments")
+                sentry_sdk.capture_exception(e)
         return {}
 
     @staticmethod
