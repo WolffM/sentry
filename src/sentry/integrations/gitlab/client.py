@@ -242,7 +242,7 @@ class GitLabApiClient(IntegrationProxyClient, RepositoryClient, CommitContextCli
     def create_issue_award(self, project_id: str, issue_id: str, emoji: str):
         return self.post(
             GitLabApiClientPath.issue_awards.format(project_id=project_id, issue_id=issue_id),
-            params={"name": emoji},
+            data={"name": emoji},
         )
 
     def delete_issue_award(self, project_id: str, issue_id: str, award_id: str):
@@ -300,7 +300,7 @@ class GitLabApiClient(IntegrationProxyClient, RepositoryClient, CommitContextCli
             GitLabApiClientPath.issue_note_awards.format(
                 project_id=repo, issue_id=issue_id, note_id=note_id
             ),
-            params={"name": emoji},
+            data={"name": emoji},
         )
 
     def delete_issue_note_award(self, repo: str, issue_id: str, note_id: str, award_id: str):
@@ -373,7 +373,7 @@ class GitLabApiClient(IntegrationProxyClient, RepositoryClient, CommitContextCli
             GitLabApiClientPath.merge_request_discussion.format(
                 project_id=project_id, pr_key=pr_key, discussion_id=discussion_id
             ),
-            params={"resolved": resolved},
+            data={"resolved": resolved},
         )
 
     def create_pr_comment(self, repo: Repository, pr: PullRequest, data: dict[str, Any]) -> Any:
@@ -420,7 +420,7 @@ class GitLabApiClient(IntegrationProxyClient, RepositoryClient, CommitContextCli
     def create_merge_request_award(self, project_id: str, pr_key: str, emoji: str):
         return self.post(
             GitLabApiClientPath.merge_request_awards.format(project_id=project_id, pr_key=pr_key),
-            params={"name": emoji},
+            data={"name": emoji},
         )
 
     def delete_merge_request_award(self, project_id: str, pr_key: str, award_id: str):
@@ -444,7 +444,7 @@ class GitLabApiClient(IntegrationProxyClient, RepositoryClient, CommitContextCli
             GitLabApiClientPath.merge_request_note_awards.format(
                 project_id=project_id, pr_key=pr_key, note_id=note_id
             ),
-            params={"name": emoji},
+            data={"name": emoji},
         )
 
     def delete_merge_request_note_award(
@@ -540,7 +540,7 @@ class GitLabApiClient(IntegrationProxyClient, RepositoryClient, CommitContextCli
         """https://docs.gitlab.com/api/branches/#create-repository-branch"""
         return self.post(
             GitLabApiClientPath.branches.format(project_id=project_id),
-            params={"branch": branch, "ref": ref},
+            data={"branch": branch, "ref": ref},
         )
 
     def get_branch(self, project_id: str, branch: str):
