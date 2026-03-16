@@ -6,7 +6,11 @@ from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, Literal, NotRequired, TypedDict
 
 from sentry.grouping.fingerprinting.types import FingerprintInfo
-from sentry.grouping.utils import get_canonical_message_from_event, normalize_message_for_grouping
+from sentry.grouping.utils import (
+    get_all_messages_from_event,
+    get_canonical_message_from_event,
+    normalize_message_for_grouping,
+)
 from sentry.stacktraces.functions import get_function_name_for_frame
 from sentry.stacktraces.platform import get_behavior_family_for_platform
 from sentry.stacktraces.processing import get_crash_frame_from_event_data
@@ -308,11 +312,26 @@ def resolve_fingerprint_values(
     context: GroupingContext,
     use_legacy_unknown_variable_handling: bool = False,
 ) -> list[str]:
+    # Lazily populated set containing both log and error messages from event, including those from
+    # error chains. Used to detect when parameterization should be run on literal values in the
+    # fingerprint.
+    event_messages: set[str] = set()
+
     def _resolve_single_entry(entry: str) -> str:
         variable_key = parse_fingerprint_entry_as_variable(entry)
         if variable_key == "default":  # entry is some variation of `{{ default }}`
             return DEFAULT_FINGERPRINT_VARIABLE
         if variable_key is None:  # entry isn't a variable
+            # Populate `event_messages` if that hasn't already been done
+            if not event_messages:
+                event_messages.update(get_all_messages_from_event(event))
+
+            # Attempt to detect cases in which a fingerprint has used any of the event's messages as
+            # part of the fingerprint, and parameterize it if so. Otherwise, return the value as is.
+            if entry in event_messages:
+                return normalize_message_for_grouping(
+                    entry, context, reason="fingerprint_literal", trim_message=False
+                )
             return entry
 
         # TODO: Once we have fully transitioned off of the `newstyle:2023-01-11` grouping config, we
