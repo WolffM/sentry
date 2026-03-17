@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
-import SelectField, {
+import {
+  SelectField,
   type SelectFieldProps,
 } from 'sentry/components/forms/fields/selectField';
 import {t} from 'sentry/locale';

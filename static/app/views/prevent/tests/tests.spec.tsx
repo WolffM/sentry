@@ -6,7 +6,7 @@ import {render, screen, waitFor} from 'sentry-test/reactTestingLibrary';
 import {PreventQueryParamsProvider} from 'sentry/components/prevent/container/preventParamsProvider';
 import {localStorageWrapper} from 'sentry/utils/localStorage';
 import {getRegionDataFromOrganization} from 'sentry/utils/regions';
-import TestsPage from 'sentry/views/prevent/tests/tests';
+import {TestsPage} from 'sentry/views/prevent/tests/tests';
 
 jest.mock('sentry/utils/regions', () => ({
   getRegionDataFromOrganization: jest.fn(),

@@ -6,12 +6,12 @@ import {Button, LinkButton} from '@sentry/scraps/button';
 import {TabList, Tabs} from '@sentry/scraps/tabs';
 
 import {addErrorMessage, addSuccessMessage} from 'sentry/actionCreators/indicator';
-import Access from 'sentry/components/acl/access';
-import Confirm from 'sentry/components/confirm';
-import Form from 'sentry/components/forms/form';
+import {Access} from 'sentry/components/acl/access';
+import {Confirm} from 'sentry/components/confirm';
+import {Form} from 'sentry/components/forms/form';
 import JsonForm from 'sentry/components/forms/jsonForm';
 import {List} from 'sentry/components/list';
-import ListItem from 'sentry/components/list/listItem';
+import {ListItem} from 'sentry/components/list/listItem';
 import {LoadingError} from 'sentry/components/loadingError';
 import {LoadingIndicator} from 'sentry/components/loadingIndicator';
 import {SentryDocumentTitle} from 'sentry/components/sentryDocumentTitle';
@@ -23,7 +23,7 @@ import type {
   PluginWithProjectList,
 } from 'sentry/types/integrations';
 import type {Organization} from 'sentry/types/organization';
-import getApiUrl from 'sentry/utils/api/getApiUrl';
+import {getApiUrl} from 'sentry/utils/api/getApiUrl';
 import {isActiveSuperuser} from 'sentry/utils/isActiveSuperuser';
 import {singleLineRenderer} from 'sentry/utils/marked/marked';
 import type {ApiQueryKey} from 'sentry/utils/queryClient';

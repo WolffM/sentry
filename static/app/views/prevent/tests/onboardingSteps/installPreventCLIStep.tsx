@@ -6,7 +6,7 @@ import {ExternalLink} from '@sentry/scraps/link';
 import {Select} from '@sentry/scraps/select';
 import {Text} from '@sentry/scraps/text';
 
-import RadioGroup from 'sentry/components/forms/controls/radioGroup';
+import {RadioGroup} from 'sentry/components/forms/controls/radioGroup';
 import {t, tct} from 'sentry/locale';
 import {OnboardingStep} from 'sentry/views/prevent/tests/onboardingSteps/onboardingStep';
 

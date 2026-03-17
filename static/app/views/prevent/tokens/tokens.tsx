@@ -15,7 +15,7 @@ import {useOrganization} from 'sentry/utils/useOrganization';
 import {useGetActiveIntegratedOrgs} from 'sentry/views/prevent/tests/queries/useGetActiveIntegratedOrgs';
 
 import {useInfiniteRepositoryTokens} from './repoTokenTable/hooks/useInfiniteRepositoryTokens';
-import RepoTokenTable, {parseSortFromQuery} from './repoTokenTable/repoTokenTable';
+import {parseSortFromQuery, RepoTokenTable} from './repoTokenTable/repoTokenTable';
 
 export function TokensPage() {
   const {integratedOrgId} = usePreventContext();

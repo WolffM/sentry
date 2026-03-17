@@ -9,7 +9,7 @@ import {Container, Flex, Grid} from '@sentry/scraps/layout';
 import {ExternalLink} from '@sentry/scraps/link';
 import {Heading, Prose, Text} from '@sentry/scraps/text';
 
-import RadioGroup from 'sentry/components/forms/controls/radioGroup';
+import {RadioGroup} from 'sentry/components/forms/controls/radioGroup';
 import {LoadingIndicator} from 'sentry/components/loadingIndicator';
 import {PageFilterBar} from 'sentry/components/pageFilters/pageFilterBar';
 import {usePreventContext} from 'sentry/components/prevent/context/preventContext';
@@ -18,7 +18,7 @@ import {RepoSelector} from 'sentry/components/prevent/repoSelector/repoSelector'
 import {getPreventParamsString} from 'sentry/components/prevent/utils';
 import {t, tct} from 'sentry/locale';
 import type {OrganizationIntegration} from 'sentry/types/integrations';
-import getApiUrl from 'sentry/utils/api/getApiUrl';
+import {getApiUrl} from 'sentry/utils/api/getApiUrl';
 import {useApiQuery} from 'sentry/utils/queryClient';
 import {getRegionDataFromOrganization} from 'sentry/utils/regions';
 import {useLocation} from 'sentry/utils/useLocation';

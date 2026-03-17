@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 
 import {Button} from '@sentry/scraps/button';
 
-import Confirm from 'sentry/components/confirm';
-import Placeholder from 'sentry/components/placeholder';
+import {Confirm} from 'sentry/components/confirm';
+import {Placeholder} from 'sentry/components/placeholder';
 import {usePreventContext} from 'sentry/components/prevent/context/preventContext';
 import {SimpleTable} from 'sentry/components/tables/simpleTable';
 import {TextCopyInput} from 'sentry/components/textCopyInput';
@@ -103,7 +103,7 @@ function RegenerateTokenCell({item}: {item: Item}) {
   );
 }
 
-export default function RepoTokenTable({response, sort}: Props) {
+export function RepoTokenTable({response, sort}: Props) {
   const {data, isLoading} = response;
   const location = useLocation();
   const navigate = useNavigate();

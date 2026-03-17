@@ -3,7 +3,7 @@ import {useSearchParams} from 'react-router-dom';
 
 import type {ApiResult} from 'sentry/api';
 import {usePreventContext} from 'sentry/components/prevent/context/preventContext';
-import getApiUrl from 'sentry/utils/api/getApiUrl';
+import {getApiUrl} from 'sentry/utils/api/getApiUrl';
 import {
   fetchDataQuery,
   useInfiniteQuery,

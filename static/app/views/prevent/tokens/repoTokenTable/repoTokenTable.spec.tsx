@@ -8,7 +8,7 @@ import {
 import {PreventQueryParamsProvider} from 'sentry/components/prevent/container/preventParamsProvider';
 import {localStorageWrapper} from 'sentry/utils/localStorage';
 
-import RepoTokenTable from './repoTokenTable';
+import {RepoTokenTable} from './repoTokenTable';
 
 const mockData = [
   {

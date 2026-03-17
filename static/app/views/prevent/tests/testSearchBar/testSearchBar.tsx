@@ -5,7 +5,7 @@ import debounce from 'lodash/debounce';
 
 import {Flex} from '@sentry/scraps/layout';
 
-import BaseSearchBar from 'sentry/components/searchBar';
+import {SearchBar as BaseSearchBar} from 'sentry/components/searchBar';
 import {t} from 'sentry/locale';
 
 const FILTER_TO_NAME = {

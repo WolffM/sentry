@@ -11,7 +11,7 @@ import {IconBroadcast} from 'sentry/icons';
 import {t} from 'sentry/locale';
 import type {Broadcast} from 'sentry/types/system';
 import {trackAnalytics} from 'sentry/utils/analytics';
-import getApiUrl from 'sentry/utils/api/getApiUrl';
+import {getApiUrl} from 'sentry/utils/api/getApiUrl';
 import {
   setApiQueryData,
   useApiQuery,

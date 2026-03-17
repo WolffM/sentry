@@ -6,7 +6,7 @@ import {Flex, Grid} from '@sentry/scraps/layout';
 import {Link} from '@sentry/scraps/link';
 import {Heading, Text} from '@sentry/scraps/text';
 
-import Placeholder from 'sentry/components/placeholder';
+import {Placeholder} from 'sentry/components/placeholder';
 import {QuestionTooltip} from 'sentry/components/questionTooltip';
 import {IconClose, IconFilter} from 'sentry/icons';
 import {t} from 'sentry/locale';

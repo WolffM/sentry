@@ -1,7 +1,7 @@
 import {addErrorMessage, addSuccessMessage} from 'sentry/actionCreators/indicator';
 import {openTokenRegenerationConfirmationModal} from 'sentry/actionCreators/modal';
 import {fetchMutation, useMutation, useQueryClient} from 'sentry/utils/queryClient';
-import type RequestError from 'sentry/utils/requestError/requestError';
+import type {RequestError} from 'sentry/utils/requestError/requestError';
 
 type RepositoryTokenResponse = {
   token: string;

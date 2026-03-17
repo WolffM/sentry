@@ -12,7 +12,7 @@ import {
   isSolutionArtifact,
   type AutofixSection,
 } from 'sentry/components/events/autofix/useExplorerAutofix';
-import Placeholder from 'sentry/components/placeholder';
+import {Placeholder} from 'sentry/components/placeholder';
 import {IconBug} from 'sentry/icons/iconBug';
 import {IconCode} from 'sentry/icons/iconCode';
 import {IconList} from 'sentry/icons/iconList';

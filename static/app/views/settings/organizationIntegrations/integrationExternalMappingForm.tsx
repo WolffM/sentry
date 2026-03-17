@@ -3,9 +3,9 @@ import styled from '@emotion/styled';
 
 import type {SelectAsyncControlProps} from '@sentry/scraps/select';
 
-import FieldFromConfig from 'sentry/components/forms/fieldFromConfig';
+import {FieldFromConfig} from 'sentry/components/forms/fieldFromConfig';
 import type {FormProps} from 'sentry/components/forms/form';
-import Form from 'sentry/components/forms/form';
+import {Form} from 'sentry/components/forms/form';
 import {FormModel} from 'sentry/components/forms/model';
 import type {Field} from 'sentry/components/forms/types';
 import {t, tct} from 'sentry/locale';

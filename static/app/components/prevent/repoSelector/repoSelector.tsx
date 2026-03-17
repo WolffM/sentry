@@ -12,7 +12,7 @@ import {useInfiniteRepositories} from 'sentry/components/prevent/repoSelector/us
 import {IconRepository} from 'sentry/icons/iconRepository';
 import {t, tct} from 'sentry/locale';
 import type {OrganizationIntegration} from 'sentry/types/integrations';
-import getApiUrl from 'sentry/utils/api/getApiUrl';
+import {getApiUrl} from 'sentry/utils/api/getApiUrl';
 import {useApiQuery} from 'sentry/utils/queryClient';
 import {useOrganization} from 'sentry/utils/useOrganization';
 

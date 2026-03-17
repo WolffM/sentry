@@ -30,8 +30,9 @@ import {useRepo} from 'sentry/views/prevent/tests/queries/useRepo';
 import {DEFAULT_SORT} from 'sentry/views/prevent/tests/settings';
 import {Summaries} from 'sentry/views/prevent/tests/summaries/summaries';
 import type {ValidSort} from 'sentry/views/prevent/tests/testAnalyticsTable/testAnalyticsTable';
-import TestAnalyticsTable, {
+import {
   isAValidSort,
+  TestAnalyticsTable,
 } from 'sentry/views/prevent/tests/testAnalyticsTable/testAnalyticsTable';
 import {TestSearchBar} from 'sentry/views/prevent/tests/testSearchBar/testSearchBar';
 
@@ -47,7 +48,7 @@ export function EmptySelectorsMessage() {
   );
 }
 
-export default function TestsPage() {
+export function TestsPage() {
   const {integratedOrgId, repository, branch, preventPeriod} = usePreventContext();
   const location = useLocation();
   const response = useInfiniteTestResults({

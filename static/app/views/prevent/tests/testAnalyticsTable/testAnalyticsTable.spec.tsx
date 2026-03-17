@@ -1,7 +1,7 @@
 import {render, screen} from 'sentry-test/reactTestingLibrary';
 
 import {PreventContext} from 'sentry/components/prevent/context/preventContext';
-import TestAnalyticsTable from 'sentry/views/prevent/tests/testAnalyticsTable/testAnalyticsTable';
+import {TestAnalyticsTable} from 'sentry/views/prevent/tests/testAnalyticsTable/testAnalyticsTable';
 
 const mockTestResults = [
   {

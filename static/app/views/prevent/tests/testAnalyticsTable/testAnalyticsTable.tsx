@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 
 import {usePreventContext} from 'sentry/components/prevent/context/preventContext';
 import type {GridColumnHeader} from 'sentry/components/tables/gridEditable';
-import GridEditable, {COL_WIDTH_UNDEFINED} from 'sentry/components/tables/gridEditable';
+import {COL_WIDTH_UNDEFINED, GridEditable} from 'sentry/components/tables/gridEditable';
 import {IconSearch} from 'sentry/icons';
 import {t} from 'sentry/locale';
 import type {Sort} from 'sentry/utils/discover/fields';
@@ -90,7 +90,7 @@ interface Props {
   sort: ValidSort;
 }
 
-export default function TestAnalyticsTable({response, sort}: Props) {
+export function TestAnalyticsTable({response, sort}: Props) {
   const {data, isLoading} = response;
   const [searchParams] = useSearchParams();
   const {branch: selectedBranch} = usePreventContext();

@@ -3,7 +3,7 @@ import {useQuery} from '@tanstack/react-query';
 
 import {addErrorMessage} from 'sentry/actionCreators/indicator';
 import {usePreventContext} from 'sentry/components/prevent/context/preventContext';
-import getApiUrl from 'sentry/utils/api/getApiUrl';
+import {getApiUrl} from 'sentry/utils/api/getApiUrl';
 import {
   fetchDataQuery,
   fetchMutation,
@@ -11,7 +11,7 @@ import {
   useQueryClient,
   type ApiQueryKey,
 } from 'sentry/utils/queryClient';
-import type RequestError from 'sentry/utils/requestError/requestError';
+import type {RequestError} from 'sentry/utils/requestError/requestError';
 import {useOrganization} from 'sentry/utils/useOrganization';
 
 const POLLING_INTERVAL_MS = 2000;
