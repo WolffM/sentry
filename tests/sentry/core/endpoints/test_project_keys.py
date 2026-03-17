@@ -99,8 +99,9 @@ class ListProjectKeysTest(APITestCase):
         )
         response = self.client.get(url)
         assert response.status_code == 200
-        assert response.data[0]["dsn"]["render"] == key.render_log_drain_endpoint
-        assert "integration/render/" in response.data[0]["dsn"]["render"]
+        key_data = next(k for k in response.data if k["id"] == key.public_key)
+        assert key_data["dsn"]["render"] == key.render_log_drain_endpoint
+        assert key_data["dsn"]["render"].endswith("/integration/render/")
 
     def test_use_case(self) -> None:
         """Regular user can access user DSNs but not internal DSNs"""
