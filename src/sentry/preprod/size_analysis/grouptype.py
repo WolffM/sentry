@@ -61,7 +61,8 @@ def _artifact_to_tags(artifact: PreprodArtifact) -> dict[str, str]:
     commit_comparison = artifact.commit_comparison
     if commit_comparison is not None:
         tags["commit_sha"] = commit_comparison.head_sha
-        tags["branch"] = commit_comparison.head_ref
+        if commit_comparison.head_ref is not None:
+            tags["branch"] = commit_comparison.head_ref
         tags["repo"] = commit_comparison.head_repo_name
         if commit_comparison.base_sha:
             tags["base_sha"] = commit_comparison.base_sha
